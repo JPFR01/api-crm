@@ -1,0 +1,6 @@
+Dockerfile
+catalog-info.yaml
+.gitlab-ci.yml
+CODEOWNERS
+Dangerfile
+LICENSE

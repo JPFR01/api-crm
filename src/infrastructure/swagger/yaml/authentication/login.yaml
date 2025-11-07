@@ -1,0 +1,90 @@
+/login:
+    post:
+        tags:
+            - Autenticação
+        summary: Realiza o login do usuário
+        description: Realização a autenticação do usuário e geração de token JWT.
+        operationId: login
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            usernameOrEmail:
+                                type: string
+                                example: usuario@hotmail.com.br
+                            password:
+                                type: string
+                                format: password
+                                example: senha
+                        required:
+                            - usernameOrEmail
+                            - password
+        responses:
+            '200':
+                description: Login realizado com sucesso
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                accessToken:
+                                    type: string
+                                refreshToken:
+                                    type: string
+                                expiresIn:
+                                    type: integer
+                                refreshExpiresIn:
+                                    type: integer
+                                tokenType:
+                                    type: string
+                                    example: Bearer
+                                givenName:
+                                    type: string
+                                familyName:
+                                    type: string
+            '400':
+                description: Dados de entrada faltando
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 400
+            '401':
+                description: Não autorizado / Usuário ou senha inválido
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Usuário ou senha inválido!
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 401

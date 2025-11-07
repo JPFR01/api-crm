@@ -1,0 +1,92 @@
+/usuarios/recuperarDadosPessoais:
+    post:
+        tags:
+            - Editar Imagem
+        summary: Recupera os dados pessoais do usuário
+        description: Recupera os dados pessoais do usuário e a imagem de perfil.
+        operationId: recuperarDadosPessoais
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            cpfUsuario:
+                                type: string
+                                example: 123.456.789-00
+                        required:
+                            - cpfUsuario
+        responses:
+            '200':
+                description: Dados pessoais recuperados com sucesso
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                codigoMatricula:
+                                    type: integer
+                                    description: Código de matrícula do usuário
+                                cpfUsuario:
+                                    type: string
+                                    description: CPF do usuário
+                                nomeUsuario:
+                                    type: string
+                                    description: Nome do usuário
+                                fotoUsuario:
+                                    type: string
+                                    description: Foto do usuário
+                                codigoLocalAcerto:
+                                    type: integer
+                                    description: Código da unidade
+                                nomeLocalAcerto:
+                                    type: string
+                                    description: Nome da unidade
+                                dataAdmissao:
+                                    type: string
+                                    format: date
+                                    description: Data de admissão do cooperado
+            '400':
+                description: Dados de entrada faltando
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 400
+            '401':
+                description: Não autorizado /
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: aaa
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 401

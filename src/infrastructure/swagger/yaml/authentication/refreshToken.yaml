@@ -1,0 +1,85 @@
+/refreshToken:
+    post:
+        tags:
+            - Autenticação
+        summary: Realiza a atualização do token de acesso
+        description: Atualiza o token de acesso do usuário utilizando o token de atualização.
+        operationId: refreshToken
+        requestBody:
+            required: true
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            refreshToken:
+                                type: string
+                                example: eyJhbGciOiJIUzI1NiIsInR5c...
+                        required:
+                            - refreshToken
+        responses:
+            '200':
+                description: Token atualizado com sucesso
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                accessToken:
+                                    type: string
+                                refreshToken:
+                                    type: string
+                                expiresIn:
+                                    type: integer
+                                refreshExpiresIn:
+                                    type: integer
+                                tokenType:
+                                    type: string
+                                    example: Bearer
+                                givenName:
+                                    type: string
+                                familyName:
+                                    type: string
+            '400':
+                description: Dados de entrada faltando
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 400
+            '401':
+                description: Não autorizado / Token inválido
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                titulo:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Erro
+                                horario:
+                                    type: string
+                                    description: Horário da solicitação
+                                mensagem:
+                                    type: string
+                                    description: Mensagem de erro
+                                    example: Token informado é inválido!
+                                status:
+                                    type: integer
+                                    description: Código de status HTTP
+                                    example: 401

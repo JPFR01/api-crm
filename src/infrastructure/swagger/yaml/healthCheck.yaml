@@ -1,0 +1,17 @@
+/health-check:
+    get:
+        tags:
+            - Health Check
+        description: Validar se a API está online
+        operationId: healthCheck
+        responses:
+            '200':
+                description: Resposta
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                status:
+                                    type: string
+                                    description: Status da API

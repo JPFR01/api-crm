@@ -1,0 +1,1 @@
+danger.import_dangerfile(gitlab: "plataforma/produtividade/central-pipeline", branch: "main", path: "produtos/pdcoop/Dangerfile")

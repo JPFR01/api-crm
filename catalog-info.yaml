@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+    name: api-exemplo
+    description: |
+        Api example description
+    annotations:
+        backstage.io/kubernetes-label-selector: app.kubernetes.io/name=api-exemplo
+        argocd/app-selector: 'app=api-exemplo-app'
+        goharbor.io/repository-slug: pdcoop/api-exemplo
+        azure.com/tag-selector: componente/api-exemplo
+        vault.io/secrets-path: pdcoop/api-exemplo
+spec:
+    type: service
+    lifecycle: production
+    owner: pdcoop
