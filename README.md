@@ -1,6 +1,6 @@
 # 🚚 API Example
 
-Api example description
+Api de controle para CRM
 
 ## 💡 Autores
 
