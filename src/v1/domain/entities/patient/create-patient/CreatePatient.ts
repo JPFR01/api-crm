@@ -1,5 +1,10 @@
 import { Header } from "@/infrastructure/helpers/HeaderHelper";
 
+export interface CreatePatientData {
+    body: CreatePatientRequest;
+    header: Header;
+}
+
 enum SexEnum {
   F = "F",
   M = "M",
@@ -67,11 +72,11 @@ export interface CreatePatientRequest {
   origin_referrer?: string;
   contacts?: ContactsInterface;
   address?: AddressInterface;
-  tags: string[];
+  tags?: string[];
   header: Header;
 }
 
 export interface CreatePatient {
-  validate: (data: CreatePatientRequest) => Promise<void>;
-  retrieve: (data: CreatePatientRequest) => Promise<void>;
+  validate: (data: CreatePatientData) => Promise<void>;
+  create: (data: CreatePatientData) => Promise<void>;
 }

@@ -1,5 +1,6 @@
 import {
   CreatePatient as _CreatePatient,
+  CreatePatientData,
   CreatePatientRequest,
 } from "@/v1/domain/entities/patient/create-patient/CreatePatient";
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
@@ -18,7 +19,7 @@ export class CreatePatient implements _CreatePatient {
     private readonly httpMethods: HttpMethod
   ) {}
 
-  async validate(data: CreatePatientRequest): Promise<void> {
+  async validate(data: CreatePatientData): Promise<void> {
     /* if (!data.cpfUsuario || extractNumbers(data.cpfUsuario).length !== 11)
       throw new InvalidParamError(
         "Method: CreatePatient.validate - Param cpfUsuario",
@@ -37,7 +38,7 @@ export class CreatePatient implements _CreatePatient {
       ); */
   }
 
-  async retrieve(data: CreatePatientRequest): Promise<void> {
+  async create(data: CreatePatientData): Promise<void> {
     try {
       return (
         await this.httpMethods.post(
@@ -45,7 +46,7 @@ export class CreatePatient implements _CreatePatient {
           data,
           {
             headers: {
-              Authorization: process.env.API_CRM, // "Bearer xxx"
+              Authorization: `Bearer ${process.env.API_CRM}`, // "Bearer xxx"
             },
           },
           "CreatePatient"
@@ -57,7 +58,7 @@ export class CreatePatient implements _CreatePatient {
         const apiError = (error as AxiosError<ApiErrorResponse>).response!.data;
 
         // Example: throw a domain-specific error
-        throw new InvalidParamError("CreatePatient.retrieve", apiError.message);
+        throw new InvalidParamError("CreatePatient.create", apiError.message);
       }
 
       // Otherwise, generic
@@ -65,7 +66,6 @@ export class CreatePatient implements _CreatePatient {
     }
   }
 }
-
 
 /* response example não é 201, adequar interface:
 {
