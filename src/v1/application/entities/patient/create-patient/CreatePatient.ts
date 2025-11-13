@@ -37,7 +37,8 @@ export class CreatePatient implements _CreatePatient {
         "Token de acesso expirado, favor realizar o login novamente!"
       ); */
   }
-
+/* 
+https://api.clinicaexperts.com.br/api/person/patient */
   async create(data: CreatePatientData): Promise<void> {
     try {
       return (
@@ -53,16 +54,21 @@ export class CreatePatient implements _CreatePatient {
         )
       ).data;
     } catch (error: unknown) {
-      // Check if it’s an Axios error with structured response
-      if ((error as AxiosError<ApiErrorResponse>).response?.data?.message) {
-        const apiError = (error as AxiosError<ApiErrorResponse>).response!.data;
-
-        // Example: throw a domain-specific error
-        throw new InvalidParamError("CreatePatient.create", apiError.message);
+      if (error instanceof Error && error.stack) {
+        try {
+          const parsed = JSON.parse(error.stack);
+          if (parsed.message) {
+            error.message = parsed.message;
+            throw new InvalidParamError("CreatePatient.create", parsed.message);
+          }
+        } catch {
+          // fallback if not JSON
+          throw new InvalidParamError(
+            "CreatePatient.create",
+            error.message || "Erro inesperado ao criar paciente."
+          );
+        }
       }
-
-      // Otherwise, generic
-      throw new Error("Erro inesperado ao criar paciente.");
     }
   }
 }

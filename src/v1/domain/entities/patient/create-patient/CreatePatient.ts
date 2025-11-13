@@ -5,7 +5,7 @@ export interface CreatePatientData {
     header: Header;
 }
 
-enum SexEnum {
+export enum SexEnum {
   F = "F",
   M = "M",
 }
