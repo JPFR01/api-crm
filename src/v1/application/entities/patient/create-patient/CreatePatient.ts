@@ -1,12 +1,9 @@
 import {
   CreatePatient as _CreatePatient,
   CreatePatientData,
-  CreatePatientRequest,
 } from "@/v1/domain/entities/patient/create-patient/CreatePatient";
+import { Crm } from "@/v1/domain/repository/crm/Crm";
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
-import { Token } from "@/v1/domain/repository/token/Token";
-import { InvalidParamError } from "@/v1/domain/shared/errors";
-import { AxiosError } from "axios";
 
 export interface ApiErrorResponse {
   message: string;
@@ -15,7 +12,7 @@ export interface ApiErrorResponse {
 
 export class CreatePatient implements _CreatePatient {
   constructor(
-    private readonly token: Token,
+    private readonly crm: Crm,
     private readonly httpMethods: HttpMethod
   ) {}
 
@@ -37,39 +34,10 @@ export class CreatePatient implements _CreatePatient {
         "Token de acesso expirado, favor realizar o login novamente!"
       ); */
   }
-/* 
+  /* 
 https://api.clinicaexperts.com.br/api/person/patient */
   async create(data: CreatePatientData): Promise<void> {
-    try {
-      return (
-        await this.httpMethods.post(
-          "https://api.clinicaexperts.com.br/api/v1/patients",
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.API_CRM}`, // "Bearer xxx"
-            },
-          },
-          "CreatePatient"
-        )
-      ).data;
-    } catch (error: unknown) {
-      if (error instanceof Error && error.stack) {
-        try {
-          const parsed = JSON.parse(error.stack);
-          if (parsed.message) {
-            error.message = parsed.message;
-            throw new InvalidParamError("CreatePatient.create", parsed.message);
-          }
-        } catch {
-          // fallback if not JSON
-          throw new InvalidParamError(
-            "CreatePatient.create",
-            error.message || "Erro inesperado ao criar paciente."
-          );
-        }
-      }
-    }
+    await this.crm.createClient(data); /* Corrigir resposta para passar apenas o body dps */
   }
 }
 
