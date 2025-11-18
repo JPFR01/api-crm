@@ -1,6 +1,7 @@
 import {
   CreatePatient as _CreatePatient,
   CreatePatientData,
+  CreatePatientRequest,
 } from "@/v1/domain/entities/patient/create-patient/CreatePatient";
 import { Crm } from "@/v1/domain/repository/crm/Crm";
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
@@ -36,8 +37,10 @@ export class CreatePatient implements _CreatePatient {
   }
   /* 
 https://api.clinicaexperts.com.br/api/person/patient */
-  async create(data: CreatePatientData): Promise<void> {
-    await this.crm.createClient(data); /* Corrigir resposta para passar apenas o body dps */
+  async create(data: CreatePatientRequest): Promise<void> {
+    await this.crm.createClient(
+      data
+    ); /* Corrigir resposta para passar apenas o body dps */
   }
 }
 

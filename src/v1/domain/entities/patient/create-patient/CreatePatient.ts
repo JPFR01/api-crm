@@ -65,7 +65,7 @@ export interface CreatePatientRequest {
   occupation?: string;
   active?: boolean;
   notifications?: NotificationsInterface;
-  documents?: DocumentsInterface;
+  documents?: DocumentsInterface[];
   healthcare_companies?: HealthCareCompaniesInterface;
   emergency_contacts?: EmergencyContactsInterface;
   origin?: string;
@@ -78,5 +78,5 @@ export interface CreatePatientRequest {
 
 export interface CreatePatient {
   validate: (data: CreatePatientData) => Promise<void>;
-  create: (data: CreatePatientData) => Promise<void>;
+  create: (data: CreatePatientRequest) => Promise<void>;
 }

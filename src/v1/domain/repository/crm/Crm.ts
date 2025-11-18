@@ -61,7 +61,7 @@ export interface CreatePatientRequest {
   occupation?: string;
   active?: boolean;
   notifications?: NotificationsInterface;
-  documents?: DocumentsInterface;
+  documents?: DocumentsInterface[];
   healthcare_companies?: HealthCareCompaniesInterface;
   emergency_contacts?: EmergencyContactsInterface;
   origin?: string;
