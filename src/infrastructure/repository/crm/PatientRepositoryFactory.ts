@@ -1,7 +1,6 @@
 import { HttpMethodFactory } from "@/main/factories/repository/http-methods/HttpMethodFactory";
 import { PatientRepository } from "@/v1/domain/entities/patient/PatientRepository";
 import { ClinicaExpertsPatientRepository } from "./clinica_experts/ClinicaExpertsPatientRepository";
-import { TokenFactory } from "@/main/factories/repository/token/TokenFactory";
 import { TokenCrmFactory } from "@/main/factories/repository/token/TokenCrmFactory";
 
 export type CrmProvider = "clinica_experts" | "hubspot";

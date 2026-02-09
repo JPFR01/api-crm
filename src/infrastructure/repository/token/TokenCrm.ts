@@ -1,5 +1,6 @@
 import { SupabaseTokenVault } from "@/main/factories/repository/token/SupabaseTokenVault";
 import { TokenCRM } from "@/v1/domain/repository/token/Token";
+import { InvalidParamError } from "@/v1/domain/shared/errors";
 
 type TokenCrmFactoryParams = {
   provider: "clinica_experts" | "hubspot";
@@ -37,8 +38,8 @@ export class TokenCrm implements TokenCRM {
     });
 
     if (!tokenFromVault) {
-      throw new Error(
-        `Token CRM não encontrado no Vault para ${this.provider}:${this.companyId}`,
+      throw new InvalidParamError(
+        `Token CRM não encontrado no Vault para ${this.provider}:${this.companyId}`, // esse erro fica rodando infinito, fazer retornar erro para msg http
       );
     }
 

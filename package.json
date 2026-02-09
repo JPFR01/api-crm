@@ -49,6 +49,7 @@
         "yarn": "^1.22.21"
     },
     "dependencies": {
+        "@supabase/supabase-js": "^2.95.3",
         "@types/swagger-jsdoc": "^6.0.4",
         "@types/uuid": "^10.0.0",
         "applicationinsights": "^2.9.5",
