@@ -25,3 +25,7 @@ export interface Token {
     authentication: (token: string) => Promise<tokenStatus>;
     open: (token: string) => Promise<PayLoadToken>;
 }
+
+export interface TokenCRM {
+    getToken: () => Promise<string>;
+}

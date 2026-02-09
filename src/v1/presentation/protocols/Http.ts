@@ -1,17 +1,20 @@
+import { CrmContext } from "@/infrastructure/repository/crm/PatientRepositoryFactory";
+
 export interface HttpResponse {
-    statusCode?: number;
-    body?: any;
-    data?: any;
-    keys?: any;
+  statusCode?: number;
+  body?: any;
+  data?: any;
+  keys?: any;
 }
 
 export interface HttpRequest {
-    body?: any;
-    params?: any;
-    socket?: {
-        remotePort?: number;
-    };
-    ip?: string;
-    headers?: any;
-    query?: any;
+  body?: any;
+  params?: any;
+  socket?: {
+    remotePort?: number;
+  };
+  ip?: string;
+  headers?: any;
+  query?: any;
+  crmContext?: CrmContext;
 }
