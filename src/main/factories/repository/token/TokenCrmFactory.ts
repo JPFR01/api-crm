@@ -1,8 +1,5 @@
 import { TokenCrm } from "@/infrastructure/repository/token/TokenCrm";
-import {
-  TokenCRMInterface as _Token,
-  CrmContextWithVault,
-} from "@/v1/domain/repository/token/Token";
+import { TokenCRMInterface as _Token } from "@/v1/domain/repository/token/Token";
 import { SupabaseTokenVault } from "./SupabaseTokenVault";
 import { CrmContext } from "@/types/express";
 
