@@ -8,5 +8,5 @@ export type PatientFilters = {
 };
 
 export interface PatientRepository {
-  list(filters?: PatientFilters): Promise<Patient[]>;
+  list(providerUrl: string, filters?: PatientFilters): Promise<Patient[]>;
 }

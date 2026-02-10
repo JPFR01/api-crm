@@ -4,6 +4,7 @@ import { TokenCRM } from "@/v1/domain/repository/token/Token";
 import { Patient } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 
 import { AxiosRequestConfig } from "axios";
+import { HttpRequest } from "@/v1/presentation/protocols/Http";
 
 export function toCurl(
   method: string,
@@ -45,12 +46,15 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
     private readonly tokenProvider: TokenCRM,
   ) {}
 
-  async list(filters?: {
-    name?: string;
-    cpf?: string;
-    phone?: string;
-    active?: boolean;
-  }): Promise<Patient[]> {
+  async list(
+    providerUrl: string,
+    filters?: {
+      name?: string;
+      cpf?: string;
+      phone?: string;
+      active?: boolean;
+    },
+  ): Promise<Patient[]> {
     const token = await this.tokenProvider.getToken(); // aqui, realmente precisa dar get no token se eu já faço isso lá atras? pensar nisso
 
     console.log("filters:", filters);
@@ -68,16 +72,10 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
       },
     };
 
-    console.log(
-      toCurl(
-        "GET",
-        "https://api.clinicaexperts.com.br/api/v1/patients",
-        config,
-      ),
-    );
+    /* console.log(toCurl("GET", "$/v1/patients", config)); */
 
     const response = await this.http.get(
-      "https://api.clinicaexperts.com.br/api/v1/patients", // PEGAR URL DO BANCO PARA MELHOR ESCALABILIDADE
+      `${providerUrl}/api/v1/patients`, // PEGAR URL DO BANCO PARA MELHOR ESCALABILIDADE
       config,
       "ClinicaExpertsPatientRepository.list",
     );

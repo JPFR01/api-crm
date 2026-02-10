@@ -5,8 +5,6 @@ import { TokenCrmFactory } from "@/main/factories/repository/token/TokenCrmFacto
 import { InvalidParamError } from "@/v1/domain/shared/errors";
 import { CrmContext } from "@/types/express";
 
-export type CrmProvider = "clinica_experts" | "hubspot";
-
 export const PatientRepositoryFactory = (
   context: CrmContext,
 ): PatientRepository => {
@@ -16,14 +14,13 @@ export const PatientRepositoryFactory = (
     providerName: context.providerName,
     providerId: context.providerId,
     companyId: context.companyId,
+    providerUrl: context.providerUrl,
   });
 
-  const providers = {
-    clinica_experts: () => new ClinicaExpertsPatientRepository(http, token), // o provider vem do BANCO, deve ter exatamente o nome clinica_experts para ser encontrado
-
+  const providers: Record<string, () => PatientRepository> = {
+    clinica_experts: () => new ClinicaExpertsPatientRepository(http, token),
     //hubspot: () => new HubspotPatientRepository(http, token),
   };
-
   const factory = providers[context.providerName];
 
   if (!factory) {

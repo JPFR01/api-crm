@@ -17,8 +17,8 @@ export class ListPatientsController implements Controller {
     const response = await listPatients.execute({
       filters: httpRequest.query,
       name: "",
-      tags: [],
       header: undefined,
+      providerUrl: httpRequest.crmContext.providerUrl,
     });
 
     return ok(response);

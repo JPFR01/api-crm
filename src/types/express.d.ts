@@ -3,6 +3,7 @@ export type CrmContext = {
   providerId: string;
   providerName: string;
   companyId: string;
+  providerUrl: string;
 };
 
 declare module "express-serve-static-core" {

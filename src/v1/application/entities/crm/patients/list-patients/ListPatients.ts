@@ -16,7 +16,10 @@ export class ListPatients implements _ListPatients {
   async execute(request: ListPatientsRequest): Promise<ListPatientsResponse> {
     // regras de negócio aqui (se houver)
     console.log(request);
-    const data = await this.patientRepository.list(request.filters);
+    const data = await this.patientRepository.list(
+      request.providerUrl,
+      request.filters,
+    );
 
     return { data };
   }
