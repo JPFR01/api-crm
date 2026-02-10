@@ -81,13 +81,14 @@ export interface ListPatientsRequest {
 }
 
 export interface Patient {
+  uuid: string;
   name: string;
   email: string;
   phone: string;
 }
 
 export interface ListPatientsResponse {
-  patients: Patient[];
+  data: Patient[];
 }
 
 export interface ListPatients {

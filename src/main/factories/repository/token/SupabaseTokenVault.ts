@@ -9,7 +9,7 @@ export class SupabaseTokenVault {
     companyId: string;
   }) {
     try {
-      // 1️⃣ pega o vault_key_name da tabela pública
+      // 1️⃣ buscar o nome da chave no banco público
       const { data: companyProvider, error: cpError } = await supabase
         .from("companies_providers")
         .select("vault_key_name")
@@ -17,24 +17,27 @@ export class SupabaseTokenVault {
         .eq("provider_id", providerId)
         .single();
 
-      if (cpError || !companyProvider) return null;
+      if (cpError || !companyProvider?.vault_key_name) {
+        console.error("Vault key não encontrada", cpError);
+        return null;
+      }
 
-      const vaultKeyName = companyProvider.vault_key_name;
-
-      // 2️⃣ chama a Edge Function para pegar o segredo
-      const { data, error } = await supabase.functions.invoke(
-        "get-vault-secret",
+      // 2️⃣ chamar RPC que retorna o segredo DECRIPTADO
+      const { data: decryptedSecret, error: rpcError } = await supabase.rpc(
+        "get_vault_secret",
         {
-          body: { vaultKeyName }, // ⚡ body deve ser JSON com o nome do segredo
+          p_secret_name: companyProvider.vault_key_name,
         },
       );
 
-      if (error || !data) return null;
+      if (rpcError) {
+        console.error("Erro ao buscar segredo no Vault:", rpcError);
+        return null;
+      }
 
-      // 3️⃣ retorna apenas o token secreto
-      return data.secret as string;
+      return decryptedSecret as string;
     } catch (err) {
-      console.error("Erro ao buscar token via Edge Function:", err);
+      console.error("Erro inesperado ao buscar token:", err);
       return null;
     }
   }
