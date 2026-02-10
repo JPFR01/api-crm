@@ -1,18 +1,19 @@
 import { SupabaseTokenVault } from "@/main/factories/repository/token/SupabaseTokenVault";
-import { CrmContext } from "@/types/express";
-import { TokenCRM } from "@/v1/domain/repository/token/Token";
+import {
+  CrmContextWithVault,
+  TokenCRMInterface,
+} from "@/v1/domain/repository/token/Token";
 import { InvalidParamError } from "@/v1/domain/shared/errors";
 
 // Cache em memória
 const tokenCache: Record<string, { token: string; expiresAt: number }> = {};
 
-export class TokenCrm implements TokenCRM {
-  private providerName: string; //clinica_experts
+export class TokenCrm implements TokenCRMInterface {
   private providerId: string;
   private companyId: string;
   private vault: SupabaseTokenVault;
 
-  constructor(params: CrmContext) {
+  constructor(params: CrmContextWithVault) {
     this.providerId = params.providerId;
     this.companyId = params.companyId;
     this.vault = params.vault;

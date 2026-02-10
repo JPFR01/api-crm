@@ -1,6 +1,6 @@
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
 import { PatientRepository } from "../../../../v1/domain/entities/patient/PatientRepository";
-import { TokenCRM } from "@/v1/domain/repository/token/Token";
+import { TokenCRMInterface } from "@/v1/domain/repository/token/Token";
 import { Patient } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 
 import { AxiosRequestConfig } from "axios";
@@ -43,7 +43,7 @@ export function toCurl(
 export class ClinicaExpertsPatientRepository implements PatientRepository {
   constructor(
     private readonly http: HttpMethod,
-    private readonly tokenProvider: TokenCRM,
+    private readonly tokenProvider: TokenCRMInterface,
   ) {}
 
   async list(
@@ -81,14 +81,5 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
     );
 
     return response.data; // DEFINIR INTERFACES DE RESPOSTA PARA MELHOR ESCALABILIDADE
-  }
-
-  private mapPatient(raw: any): Patient {
-    return {
-      uuid: raw.uuid,
-      name: raw.name,
-      phone: raw.phone,
-      email: raw.email,
-    };
   }
 }

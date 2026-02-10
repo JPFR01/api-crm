@@ -11,8 +11,8 @@ export const PatientRepositoryFactory = (
   const http = HttpMethodFactory();
 
   const token = TokenCrmFactory({
-    providerName: context.providerName,
     providerId: context.providerId,
+    providerName: context.providerName,
     companyId: context.companyId,
     providerUrl: context.providerUrl,
   });
