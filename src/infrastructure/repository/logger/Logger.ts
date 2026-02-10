@@ -18,9 +18,9 @@ export class Logger implements ILogger {
 
         if (process.env.APPINSIGHTS_CONNECTION_STRING) {
             transports.push(
-                new AzureApplicationInsightsLogger({
+                /* new AzureApplicationInsightsLogger({
                     instrumentationKey: process.env.APPINSIGHTS_CONNECTION_STRING,
-                }),
+                }), */
             );
         }
 

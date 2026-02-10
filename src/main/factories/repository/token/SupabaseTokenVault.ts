@@ -1,23 +1,40 @@
 import { supabase } from "@/infrastructure/repository/token/supabaseClient";
 
 export class SupabaseTokenVault {
-  async get({ providerId, companyId }: { providerId: string; companyId: string }) {
+  async get({
+    providerId,
+    companyId,
+  }: {
+    providerId: string;
+    companyId: string;
+  }) {
     try {
-      const { data, error } = await supabase
+      // 1️⃣ pega o vault_key_name da tabela pública
+      const { data: companyProvider, error: cpError } = await supabase
         .from("companies_providers")
-        .select(
-          `
-    token:crm_tokens(token)
-  `,
-        )
+        .select("vault_key_name")
         .eq("company_id", companyId)
-        .eq("provider_id", providerId) // você precisaria mapear "provider" para o id
+        .eq("provider_id", providerId)
         .single();
 
+      if (cpError || !companyProvider) return null;
+
+      const vaultKeyName = companyProvider.vault_key_name;
+
+      // 2️⃣ chama a Edge Function para pegar o segredo
+      const { data, error } = await supabase.functions.invoke(
+        "get-vault-secret",
+        {
+          body: { vaultKeyName }, // ⚡ body deve ser JSON com o nome do segredo
+        },
+      );
+
       if (error || !data) return null;
-      return data.token;
+
+      // 3️⃣ retorna apenas o token secreto
+      return data.secret as string;
     } catch (err) {
-      console.error("Erro ao buscar token no Supabase:", err);
+      console.error("Erro ao buscar token via Edge Function:", err);
       return null;
     }
   }

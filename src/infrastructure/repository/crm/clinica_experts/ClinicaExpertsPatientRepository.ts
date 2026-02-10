@@ -15,7 +15,7 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
     phone?: string;
     active?: boolean;
   }): Promise<Patient[]> {
-    const token = await this.tokenProvider.getToken();
+    const token = await this.tokenProvider.getToken(); // aqui, realmente precisa dar get no token se eu já faço isso lá atras? pensar nisso
 
     const response = await this.http.get<any[]>({
       method: "GET",
