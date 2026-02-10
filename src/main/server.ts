@@ -1,8 +1,8 @@
 import app from '@/main/config/app';
 require('dotenv').config();
 
-const appInsights = require('applicationinsights');
-appInsights.setup(process.env.APPINSIGHTS_CONNECTION_STRING).setAutoCollectConsole(true, true).start();
+// const appInsights = require('applicationinsights');
+// appInsights.setup(process.env.APPINSIGHTS_CONNECTION_STRING).setAutoCollectConsole(true, true).start();
 
 const port = Number(process.env.PORT || 3000);
 

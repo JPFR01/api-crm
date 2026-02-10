@@ -1,7 +1,5 @@
-import {
-  CrmContext,
-  PatientRepositoryFactory,
-} from "@/infrastructure/repository/crm/PatientRepositoryFactory";
+import { PatientRepositoryFactory } from "@/infrastructure/repository/crm/PatientRepositoryFactory";
+import { CrmContext } from "@/types/express";
 import { ListPatients } from "@/v1/application/entities/crm/patients/list-patients/ListPatients";
 import { ListPatients as _ListPatients } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 

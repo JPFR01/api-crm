@@ -2,7 +2,7 @@ import { Controller } from "@/v1/presentation/helpers/Controller";
 import { HttpRequest, HttpResponse } from "@/v1/presentation/protocols/Http";
 import { ok } from "@/v1/presentation/helpers/http-helper";
 import { ListPatients } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
-import { CrmContext } from "@/infrastructure/repository/crm/PatientRepositoryFactory";
+import { CrmContext } from "@/types/express";
 
 export class ListPatientsController implements Controller {
   constructor(

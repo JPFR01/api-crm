@@ -3,14 +3,16 @@ import { TokenCRM as _Token } from "@/v1/domain/repository/token/Token";
 import { SupabaseTokenVault } from "./SupabaseTokenVault";
 
 type TokenCrmFactoryParams = {
-  provider: "clinica_experts" | "hubspot";
+  providerId: string;
+  providerName: "clinica_experts" | "hubspot";
   companyId: string;
 };
 
 export const TokenCrmFactory = ({
-  provider,
+  providerName,
+  providerId,
   companyId,
 }: TokenCrmFactoryParams): _Token => {
   const vault = new SupabaseTokenVault(); // ou outro vault futuramente desacoplado
-  return new TokenCrm({ provider, companyId, vault });
+  return new TokenCrm({ providerName, providerId, companyId, vault });
 };

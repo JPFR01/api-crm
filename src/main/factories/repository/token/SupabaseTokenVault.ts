@@ -1,7 +1,7 @@
 import { supabase } from "@/infrastructure/repository/token/supabaseClient";
 
 export class SupabaseTokenVault {
-  async get({ provider, companyId }: { provider: string; companyId: string }) {
+  async get({ providerId, companyId }: { providerId: string; companyId: string }) {
     try {
       const { data, error } = await supabase
         .from("companies_providers")

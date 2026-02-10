@@ -22,13 +22,16 @@ export const adaptRoute = (controller: Controller) => {
       }
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
-      return httpResponseHelper(
+      const httpResponse: HttpResponse = httpResponseHelper(
         error,
         "",
         "Express",
         "CatchExpressAdaptRoute",
         "ExpressAdaptRoute",
       );
+
+      // envia de fato a resposta HTTP
+      return res.status(httpResponse.statusCode).json(httpResponse.body);
     }
   };
 };

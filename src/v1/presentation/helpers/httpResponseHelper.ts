@@ -34,6 +34,8 @@ const logger: Logger = LoggerFactory();
 export function httpResponseHelper(error: any, data: any, origin: string, destiny: string, controller: string): HttpResponse {
     const treatedError: Error = new Error(error);
 
+    console.log(treatedError)
+
     const httpResponse: HttpResponse = errorValidator(error, treatedError);
 
     if (data)

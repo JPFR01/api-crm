@@ -1,7 +1,7 @@
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
 import { PatientRepository } from "../../../../v1/domain/entities/patient/PatientRepository";
 import { TokenCRM } from "@/v1/domain/repository/token/Token";
-
+import { Patient } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 
 export class ClinicaExpertsPatientRepository implements PatientRepository {
   constructor(

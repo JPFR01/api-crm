@@ -80,8 +80,14 @@ export interface ListPatientsRequest {
   };
 }
 
+export interface Patient {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 export interface ListPatientsResponse {
-  patients: ListPatientsRequest[];
+  patients: Patient[];
 }
 
 export interface ListPatients {

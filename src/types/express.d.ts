@@ -1,6 +1,7 @@
 // Isso "estende" o tipo Request do Express
 export type CrmContext = {
-  provider: CrmProvider;
+  providerId: string;
+  providerName: string;
   companyId: string;
 };
 

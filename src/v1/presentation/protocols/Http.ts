@@ -1,4 +1,4 @@
-import { CrmContext } from "@/infrastructure/repository/crm/PatientRepositoryFactory";
+import { CrmContext } from "@/types/express";
 
 export interface HttpResponse {
   statusCode?: number;
