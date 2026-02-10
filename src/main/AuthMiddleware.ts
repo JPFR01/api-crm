@@ -5,6 +5,15 @@ import { Request, Response, NextFunction } from "express";
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
+
+type CompanyProviderRow = {
+  provider_id: string;
+  providers: {
+    name: string;
+    url: string;
+  };
+};
+
 interface AuthenticatedRequest extends Request {
   crmContext?: CrmContext;
 }
@@ -38,7 +47,7 @@ export const authMiddleware = async (
     )
     .eq("company_id", companyId)
     .eq("active", true)
-    .single();
+    .single<CompanyProviderRow>();
 
   if (error || !companyProvider) {
     return res.status(400).json({ message: "Provider ativo não encontrado" });
@@ -47,8 +56,8 @@ export const authMiddleware = async (
   req.crmContext = {
     companyId,
     providerId: companyProvider.provider_id,
-    providerName: companyProvider.providers[0].name,
-    providerUrl: companyProvider.providers[0].url,
+    providerName: companyProvider.providers.name,
+    providerUrl: companyProvider.providers.url,
   };
 
   next();
