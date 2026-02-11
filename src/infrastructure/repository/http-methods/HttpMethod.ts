@@ -120,6 +120,9 @@ export class HttpMethod implements Http {
             status = codigo ?? responseStatus ?? 500;
         }
 
+        const message = this.extractErrorMessage(responseData);
+        const stack = `HttpMethod.${method}`;
+
         switch (status) {
             case 452:
             case 453:
@@ -132,13 +135,37 @@ export class HttpMethod implements Http {
                 if (isExpiredTokenError(responseData)) {
                     return new AuthenticationError(JSON.stringify(responseData), 'Token informado é inválido !');
                 }
-                return new InvalidParamError(JSON.stringify(responseData));
+                // Fixing the instantiation: stack first, then message
+                return new InvalidParamError(stack, message);
             case 404:
-                return new NotFoundError(JSON.stringify(error), error.message);
+                return new NotFoundError(JSON.stringify(error), message || error.message);
             case 501:
                 return new NotImplementedError(JSON.stringify(responseData));
             default:
                 return new ServerError(JSON.stringify(responseData));
         }
+    }
+
+    private extractErrorMessage(data: any): string {
+        if (!data) return 'Erro inesperado';
+        if (typeof data === 'string') return data;
+        
+        if (typeof data === 'object') {
+            if (data.errors && typeof data.errors === 'object') {
+                 // Format: { message: "...", errors: { ... } }
+                 const failures = JSON.stringify(data.errors);
+                 return data.message ? `${data.message} - ${failures}` : failures;
+            }
+            if (Array.isArray(data.error)) {
+                // Format: { error: [ ... ] }
+                return JSON.stringify(data.error);
+            }
+            if (data.message) return data.message;
+            if (data.error) {
+                return typeof data.error === 'string' ? data.error : JSON.stringify(data.error);
+            }
+        }
+        
+        return JSON.stringify(data);
     }
 }

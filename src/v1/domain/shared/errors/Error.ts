@@ -27,7 +27,7 @@ export class Error {
         this.titulo = 'Erro';
         this.horario = new Date().getTime();
 
-        if (error.stack.indexOf('dsErroNegocio') != -1 || error.stack.indexOf('dsErroTecnico') != -1) {
+        if (error.stack && (error.stack.indexOf('dsErroNegocio') != -1 || error.stack.indexOf('dsErroTecnico') != -1)) {
             const jsonError: any = JSON.parse(error.stack);
             this.status = !jsonError.codigo ? 400 : jsonError.codigo;
             this.mensagem = jsonError.dsErroNegocio;

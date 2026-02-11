@@ -18,7 +18,6 @@ export class CreatePatientController implements Controller {
         "crmContext não encontrado",
       );
     }
-    try {
       const createPatient = this.createPatientFactory(crmContext);
 
       const response = await createPatient.execute({
@@ -27,8 +26,5 @@ export class CreatePatientController implements Controller {
       });
 
       return ok(response);
-    } catch (err: any) {
-      throw new Error(err.message);
-    }
   }
 }

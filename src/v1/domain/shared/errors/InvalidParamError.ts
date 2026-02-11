@@ -1,8 +1,22 @@
 export class InvalidParamError extends Error {
     constructor(stack?: string, message?: string) {
-        super(stack);
+        // Call super regardless of whether message is present
+        super(message || 'Invalid Parameter');
+        
+        // Ensure name is correct
         this.name = 'InvalidParamError';
-        this.message = message;
+        
+        // Force the message property to be set, potentially shadowing prototype getter
+        Object.defineProperty(this, 'message', {
+            configurable: true,
+            enumerable: false,
+            value: message || '',
+            writable: true,
+        });
+
         this.stack = stack;
+        
+        // Restore prototype chain
+        Object.setPrototypeOf(this, InvalidParamError.prototype);
     }
 }
