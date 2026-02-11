@@ -22,7 +22,7 @@ export class ClinicaExpertsProfessionalRepository
     },
   ): Promise<Patient[]> {
     try {
-      const token = await this.tokenProvider.getToken(); // aqui, realmente precisa dar get no token se eu já faço isso lá atras? pensar nisso
+      const token = await this.tokenProvider.getToken();
 
       const config: AxiosRequestConfig = {
         headers: {
@@ -38,14 +38,20 @@ export class ClinicaExpertsProfessionalRepository
       };
 
       const response = await this.http.get(
-        `${providerUrl}/api/v1/professionals`, // PEGAR URL DO BANCO PARA MELHOR ESCALABILIDADE
+        `${providerUrl}/api/v1/professionals`,
         config,
         "ClinicaExpertsProfessionalRepository.list",
       );
 
-      return response.data; // DEFINIR INTERFACES DE RESPOSTA PARA MELHOR ESCALABILIDADE
+      // ⚡ Filtra apenas profissionais com CRM
+      const professionalsWithCrm = response.data.filter(
+        (person: any) =>
+          person.board?.code?.toLowerCase() === "crm" && !!person.board?.number,
+      );
+
+      return professionalsWithCrm;
     } catch (err: any) {
-      throw new Error("Erro inesperado ao listar pacientes");
+      throw new Error("Erro inesperado ao listar profissionais");
     }
   }
 }

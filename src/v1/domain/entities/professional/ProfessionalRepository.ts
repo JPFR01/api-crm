@@ -1,4 +1,4 @@
-import { Professional } from "../crm/professionals/list-professionals.ts/ListProfessionals";
+import { Professional } from "../crm/professionals/list-professionals/ListProfessionals";
 
 export type ProfessionalFilters = {
   name?: string;
