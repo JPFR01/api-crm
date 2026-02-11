@@ -1,8 +1,12 @@
 import { HttpMethod } from "@/v1/domain/repository/HttpMethod";
-import { PatientRepository } from "../../../../v1/domain/entities/patient/PatientRepository";
+import {
+  PatientData,
+  PatientRepository,
+} from "../../../../v1/domain/entities/patient/PatientRepository";
 import { TokenCRMInterface } from "@/v1/domain/repository/token/Token";
 import { Patient } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 import { AxiosRequestConfig } from "axios";
+import { InvalidParamError } from "@/v1/domain/shared/errors";
 
 export function toCurl(
   method: string,
@@ -43,6 +47,44 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
     private readonly http: HttpMethod,
     private readonly tokenProvider: TokenCRMInterface,
   ) {}
+
+  async create(providerUrl: any, patientData: PatientData): Promise<void> {
+    try {
+      const token = await this.tokenProvider.getToken(); // aqui, realmente precisa dar get no token se eu já faço isso lá atras? pensar nisso
+
+      const config: AxiosRequestConfig = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      };
+
+      /* console.log(toCurl("GET", "$/v1/patients", config)); */
+
+      const response = await this.http.post(
+        `${providerUrl}/api/v1/patients`, // PEGAR URL DO BANCO PARA MELHOR ESCALABILIDADE
+        patientData,
+        config,
+        "ClinicaExpertsPatientRepository.create",
+      );
+
+      return response.data; // DEFINIR INTERFACES DE RESPOSTA PARA MELHOR ESCALABILIDADE
+    } catch (err: any) {
+      if (err?.name === "InvalidParamError" && err.stack) {
+        // Parseia o JSON que está dentro do stack
+        const parsed = JSON.parse(err.stack);
+        const message =
+          parsed.message || "Erro inesperado ao cadastrar paciente";
+
+        throw new InvalidParamError(
+          "ClinicaExpertsPatientRepository.create",
+          message,
+        );
+      }
+
+      throw new Error("Erro inesperado ao cadastrar paciente");
+    }
+  }
 
   async list(
     providerUrl: string,

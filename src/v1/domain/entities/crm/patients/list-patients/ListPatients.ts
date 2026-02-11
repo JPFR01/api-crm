@@ -1,12 +1,3 @@
-import { Header } from "@/infrastructure/helpers/HeaderHelper";
-
-export interface ListPatientsRequest {
-  name: string;
-  email?: string;
-  phone?: string;
-  header: Header;
-}
-
 export interface ListPatientsRequest {
   filters?: {
     name?: string;

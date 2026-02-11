@@ -7,6 +7,14 @@ export type PatientFilters = {
   active?: boolean;
 };
 
+export type PatientData = {
+  name: string;
+  date_birth: string;
+  email: string;
+  phone: string;
+};
+
 export interface PatientRepository {
+  create(providerUrl: any, patientData: PatientData): Promise<void>;
   list(providerUrl: string, filters?: PatientFilters): Promise<Patient[]>;
 }

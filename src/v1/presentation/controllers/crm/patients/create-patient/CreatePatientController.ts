@@ -1,28 +1,28 @@
 import { Controller } from "@/v1/presentation/helpers/Controller";
 import { HttpRequest, HttpResponse } from "@/v1/presentation/protocols/Http";
 import { ok } from "@/v1/presentation/helpers/http-helper";
-import { ListPatients } from "@/v1/domain/entities/crm/patients/list-patients/ListPatients";
 import { CrmContext } from "@/types/express";
 import { InvalidParamError } from "@/v1/domain/shared/errors";
+import { CreatePatient } from "@/v1/domain/entities/crm/patients/create-patient/CreatePatient";
 
-export class ListPatientsController implements Controller {
+export class CreatePatientController implements Controller {
   constructor(
-    private readonly listPatientsFactory: (ctx: CrmContext) => ListPatients,
+    private readonly createPatientFactory: (ctx: CrmContext) => CreatePatient,
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const crmContext = httpRequest?.crmContext;
     if (!crmContext) {
       throw new InvalidParamError(
-        "Controller.ListPatientsController",
+        "Controller.CreatePatientController",
         "crmContext não encontrado",
       );
     }
     try {
-      const listPatients = this.listPatientsFactory(crmContext);
+      const createPatient = this.createPatientFactory(crmContext);
 
-      const response = await listPatients.execute({
-        filters: httpRequest.query,
+      const response = await createPatient.execute({
+        data: httpRequest.body,
         providerUrl: crmContext.providerUrl || "",
       });
 

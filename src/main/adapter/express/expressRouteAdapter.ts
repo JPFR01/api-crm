@@ -22,6 +22,7 @@ export const adaptRoute = (controller: Controller) => {
       }
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
+      console.log({error});
       const httpResponse: HttpResponse = httpResponseHelper(
         error,
         "",
