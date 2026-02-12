@@ -4,6 +4,7 @@ import { ListPatientsControllerFactory } from "../factories/controllers/crm/pati
 import { authMiddleware } from "../AuthMiddleware";
 import { ListProfessionalsControllerFactory } from "../factories/controllers/crm/professionals/list-professionals/ListProfessionalsControllerFactory";
 import { CreatePatientControllerFactory } from "../factories/controllers/crm/patients/create-patient/CreatePatientControllerFactory";
+import { CreateBookingControllerFactory } from "../factories/controllers/crm/bookings/create-booking/CreateBookingControllerFactory";
 
 export default (router: Router): void => {
   router.get(
@@ -20,5 +21,10 @@ export default (router: Router): void => {
     "/v1/patients",
     authMiddleware,
     adaptRoute(CreatePatientControllerFactory()),
+  );
+  router.post(
+    "/v1/bookings",
+    authMiddleware,
+    adaptRoute(CreateBookingControllerFactory()),
   );
 };

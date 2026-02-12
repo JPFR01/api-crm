@@ -1,6 +1,6 @@
 import {HttpResponse} from '@/v1/presentation/protocols/Http';
 import {HttpMethod as Http, UnifaceBaseStruct} from '@/v1/domain/repository/HttpMethod';
-import {AuthenticationError, InvalidParamError, NotFoundError, NotImplementedError, ServerError} from '@/v1/domain/shared/errors';
+import {AuthenticationError, InvalidParamError, NotFoundError, NotImplementedError, ServerError, ConflictError} from '@/v1/domain/shared/errors';
 import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {unifaceJsonToXmlHelper} from '@/v1/application/helpers/UnifaceHelper';
 import {UnassignedError} from '@/v1/domain/shared/errors/UnassignedError';
@@ -139,6 +139,8 @@ export class HttpMethod implements Http {
                 return new InvalidParamError(stack, message);
             case 404:
                 return new NotFoundError(JSON.stringify(error), message || error.message);
+            case 409:
+                return new ConflictError(stack, message);
             case 501:
                 return new NotImplementedError(JSON.stringify(responseData));
             default:

@@ -14,3 +14,4 @@ export * from './NotFoundError';
 export * from './PermissionError';
 export * from './KeycloakTokenError';
 export * from './KeycloakKeyError';
+export * from './ConflictError';

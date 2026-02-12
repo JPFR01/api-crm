@@ -18,6 +18,8 @@ export const requestTimeout = (error: Error): HttpResponse => errorHttpHelper(er
 
 export const forbidden = (error: Error): HttpResponse => errorHttpHelper(error, HttpStatusCode.Forbidden);
 
+export const conflict = (error: Error): HttpResponse => errorHttpHelper(error, HttpStatusCode.Conflict);
+
 export const unassigned = (error: Error, code: number): HttpResponse => {
     error.status = !error.status ? code : error.status;
     return {

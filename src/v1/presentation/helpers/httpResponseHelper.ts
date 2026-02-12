@@ -12,6 +12,7 @@ import {
     NotImplementedError,
     PermissionError,
     TimeoutConnectError,
+    ConflictError,
 } from '@/v1/domain/shared/errors';
 import {Error} from '@/v1/domain/shared/errors/Error';
 import {InvalidHeaderError} from '@/v1/domain/shared/errors/InvalidHeaderError';
@@ -26,6 +27,7 @@ import {
     unassigned,
     notFound,
     notImplemented,
+    conflict,
 } from '@/v1/presentation/helpers/http-helper';
 import {HttpResponse} from '@/v1/presentation/protocols/Http';
 
@@ -74,6 +76,8 @@ function errorValidator(error: any, treatedError: Error): HttpResponse {
             return notFound(treatedError);
         case NotImplementedError:
             return notImplemented(treatedError);
+        case ConflictError:
+            return conflict(treatedError);
         default:
             return serverError(treatedError);
     }
