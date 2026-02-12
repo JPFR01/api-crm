@@ -1,11 +1,11 @@
-FROM registry.com.br/library/node:22-alpine  AS builder
+FROM node:22-alpine AS builder
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn run build
 RUN yarn install --production --ignore-scripts --prefer-offline --frozen-lockfile && yarn cache clean
-FROM registry.com.br/library/node:22-alpine AS runner
+FROM node:22-alpine AS runner
 RUN apk update && \
     apk add --no-cache tini curl
 WORKDIR /app

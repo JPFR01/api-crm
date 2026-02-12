@@ -18,7 +18,7 @@ export class CreatePatient implements _CreatePatient {
   ): Promise<CreatePatientsResponse> {
     // regras de negócio aqui (se houver)
     console.log(request);
-    const data = await this.patientRepository.create(
+    /* const data =  */await this.patientRepository.create(
       request.providerUrl,
       request.data,
     );

@@ -2,7 +2,6 @@ import {maskFieldsHelper, maskXmlFieldsHelper} from '@/infrastructure/helpers/Lo
 import {filterNullUndefinedAttributes} from '@/v1/application/helpers/UnifaceHelper';
 import {Logger as ILogger, LoggerLevel, LoggerLogData} from '@/v1/domain/repository/Logger';
 import * as winston from 'winston';
-import {AzureApplicationInsightsLogger} from 'winston-azure-application-insights';
 
 const {combine, timestamp, prettyPrint} = winston.format;
 
