@@ -4,8 +4,9 @@
     "description": "",
     "main": "dist/main/server.js",
     "scripts": {
-        "build": "rm -rf ./dist && tsc && tscpaths -p tsconfig.json -s ./src -o ./dist",
-        "build-dev": "rm -rf ./dist && tsc tscpaths -p tsconfig.json -s ./src -o ./dist",
+        "build": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && yarn copy-files",
+        "build-dev": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && yarn copy-files",
+        "copy-files": "node scripts/copy-assets.js",
         "test": "NODE_ENV=test jest --no-cache --watchAll --coverage",
         "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
         "start": "node ./dist/main/server.js",
@@ -24,7 +25,7 @@
         "prepare": "husky",
         "check-vulnerabilities": "yarn audit --level critical | grep -q 'found 0 vulnerabilities' && echo 'No critical vulnerabilities found.' || echo 'Critical vulnerabilities found. Please fix them before pushing.'"
     },
-    "author": "Felipe Baptiston de Souza",
+    "author": "João Pedro Fonseca Rodrigues",
     "license": "ISC",
     "devDependencies": {
         "@types/axios": "^0.14.0",
@@ -47,6 +48,7 @@
         "jest": "^29.7.0",
         "jest-mock": "^29.7.0",
         "prettier": "^3.6.2",
+        "rimraf": "^6.1.2",
         "ts-jest": "^29.1.1",
         "typescript": "^5.2.2",
         "yarn": "^1.22.21"

@@ -1,5 +1,6 @@
+import 'dotenv/config';
 import app from '@/main/config/app';
-require('dotenv').config();
+
 
 // const appInsights = require('applicationinsights');
 // appInsights.setup(process.env.APPINSIGHTS_CONNECTION_STRING).setAutoCollectConsole(true, true).start();
