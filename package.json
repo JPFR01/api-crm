@@ -4,8 +4,8 @@
     "description": "",
     "main": "dist/main/server.js",
     "scripts": {
-        "build": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && yarn copy-files",
-        "build-dev": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && yarn copy-files",
+        "build": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && node scripts/copy-assets.js",
+        "build-dev": "rimraf dist && tsc -p tsconfig.build.json && tscpaths -p tsconfig.json -s ./src -o ./dist && node scripts/copy-assets.js",
         "copy-files": "node scripts/copy-assets.js",
         "test": "NODE_ENV=test jest --no-cache --watchAll --coverage",
         "dev": "ts-node-dev -r tsconfig-paths/register -r dotenv/config --respawn --transpile-only --ignore-watch node_modules --no-notify src/main/server.ts",
