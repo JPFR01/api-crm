@@ -90,7 +90,7 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
           Accept: "application/json",
         },
         params: {
-          phone: filters?.phone,
+          phone: filters?.phone?.trim(),
           name: filters?.name,
         },
       };
@@ -105,7 +105,12 @@ export class ClinicaExpertsPatientRepository implements PatientRepository {
 
       return response.data; // DEFINIR INTERFACES DE RESPOSTA PARA MELHOR ESCALABILIDADE
     } catch (err: any) {
-      throw new Error("Erro inesperado ao listar pacientes");
+      console.error("Error in ClinicaExpertsPatientRepository.list:", err);
+      if (err.response) {
+         console.error("Response data:", err.response.data);
+         console.error("Response status:", err.response.status);
+      }
+      throw new Error(`Erro inesperado ao listar pacientes: ${err.message}`);
     }
   }
 }
