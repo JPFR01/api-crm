@@ -6,6 +6,7 @@ import { ListProfessionalsControllerFactory } from "../factories/controllers/crm
 import { CreatePatientControllerFactory } from "../factories/controllers/crm/patients/create-patient/CreatePatientControllerFactory";
 import { CreateBookingControllerFactory } from "../factories/controllers/crm/bookings/create-booking/CreateBookingControllerFactory";
 import { ListAvailableHoursControllerFactory } from "../factories/controllers/crm/bookings/list-available-hours/ListAvailableHoursControllerFactory";
+import { ListHealthcareCompaniesControllerFactory } from "../factories/controllers/crm/healthcare-companies/list-healthcare-companies/ListHealthcareCompaniesControllerFactory";
 
 export default (router: Router): void => {
   router.get(
@@ -32,5 +33,10 @@ export default (router: Router): void => {
     "/v1/available-hours",
     authMiddleware,
     adaptRoute(ListAvailableHoursControllerFactory()),
+  );
+  router.get(
+    "/v1/healthcare-companies",
+    authMiddleware,
+    adaptRoute(ListHealthcareCompaniesControllerFactory()),
   );
 };
