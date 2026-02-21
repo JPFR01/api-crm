@@ -18,7 +18,16 @@ export const adaptRoute = (controller: Controller) => {
       const httpResponse: HttpResponse = await controller.handle(httpRequest);
 
       if (httpResponse.statusCode >= 200 && httpResponse.statusCode < 300) {
-        return res.status(httpResponse.statusCode).json(httpResponse.body.data);
+        if (httpResponse.body?.data !== undefined) {
+          return res.status(httpResponse.statusCode).json(httpResponse.body.data);
+        }
+        
+        // If body is just a primitive (e.g., string like "12345" for Meta Challenge), use .send() instead of .json()
+        if (typeof httpResponse.body === 'string' || typeof httpResponse.body === 'number') {
+           return res.status(httpResponse.statusCode).send(httpResponse.body);
+        }
+
+        return res.status(httpResponse.statusCode).json(httpResponse.body);
       }
       return res.status(httpResponse.statusCode).json(httpResponse.body);
     } catch (error) {
